@@ -1,4 +1,6 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "./useAuth";
 
 export interface Reward {
   id: string;
@@ -17,97 +19,133 @@ const REWARDS: Omit<Reward, "unlocked">[] = [
   { id: "unstoppable", title: "Unstoppable", description: "30-day streak", requiredStreak: 30, icon: "👑" },
 ];
 
-interface StepData {
-  steps: number;
-  goal: number;
-  streak: number;
-  bestStreak: number;
-  lastCompletedDate: string | null;
-}
-
-const STORAGE_KEY = "stride-data";
-
-function loadData(): StepData {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  return { steps: 0, goal: 8000, streak: 0, bestStreak: 0, lastCompletedDate: null };
-}
-
-function saveData(data: StepData) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
-
-function getToday() {
-  return new Date().toISOString().slice(0, 10);
-}
-
 export function useStepTracker() {
-  const [data, setData] = useState<StepData>(loadData);
+  const { user } = useAuth();
+  const [steps, setSteps] = useState(0);
+  const [goal, setGoalState] = useState(8000);
+  const [streak, setStreak] = useState(0);
+  const [bestStreak, setBestStreak] = useState(0);
+  const [loading, setLoading] = useState(true);
 
+  // Load today's data from DB
   useEffect(() => {
-    saveData(data);
-  }, [data]);
+    if (!user) return;
+    const loadData = async () => {
+      const today = new Date().toISOString().slice(0, 10);
 
-  // Check if streak should reset (missed a day)
-  useEffect(() => {
-    if (data.lastCompletedDate) {
-      const last = new Date(data.lastCompletedDate);
-      const today = new Date(getToday());
-      const diff = Math.floor((today.getTime() - last.getTime()) / (1000 * 60 * 60 * 24));
-      if (diff > 1) {
-        setData(prev => ({ ...prev, streak: 0 }));
+      // Get today's steps
+      const { data: todayData } = await supabase
+        .from("daily_steps")
+        .select("steps, goal")
+        .eq("user_id", user.id)
+        .eq("date", today)
+        .maybeSingle();
+
+      if (todayData) {
+        setSteps(todayData.steps);
+        setGoalState(todayData.goal);
       }
+
+      // Calculate streak from history
+      const { data: history } = await supabase
+        .from("daily_steps")
+        .select("date, steps, goal")
+        .eq("user_id", user.id)
+        .order("date", { ascending: false })
+        .limit(365);
+
+      if (history) {
+        let currentStreak = 0;
+        let best = 0;
+        const dates = history.filter(d => d.steps >= d.goal).map(d => d.date);
+        const dateSet = new Set(dates);
+
+        // Count streak backwards from today/yesterday
+        const checkDate = new Date();
+        // If today isn't completed, start from yesterday
+        const todayStr = checkDate.toISOString().slice(0, 10);
+        if (!dateSet.has(todayStr)) {
+          checkDate.setDate(checkDate.getDate() - 1);
+        }
+
+        while (true) {
+          const d = checkDate.toISOString().slice(0, 10);
+          if (dateSet.has(d)) {
+            currentStreak++;
+            checkDate.setDate(checkDate.getDate() - 1);
+          } else {
+            break;
+          }
+        }
+
+        // Calculate best streak
+        const sortedDates = [...dates].sort();
+        let tempStreak = 0;
+        for (let i = 0; i < sortedDates.length; i++) {
+          if (i === 0) {
+            tempStreak = 1;
+          } else {
+            const prev = new Date(sortedDates[i - 1]);
+            const curr = new Date(sortedDates[i]);
+            const diff = (curr.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24);
+            tempStreak = diff === 1 ? tempStreak + 1 : 1;
+          }
+          best = Math.max(best, tempStreak);
+        }
+
+        setStreak(currentStreak);
+        setBestStreak(best);
+      }
+
+      setLoading(false);
+    };
+
+    loadData();
+  }, [user]);
+
+  const progress = Math.min(steps / goal, 1);
+  const goalReached = steps >= goal;
+
+  const addSteps = useCallback(async (amount: number) => {
+    if (!user) return;
+    const newSteps = steps + amount;
+    setSteps(newSteps);
+
+    const today = new Date().toISOString().slice(0, 10);
+    await supabase
+      .from("daily_steps")
+      .upsert(
+        { user_id: user.id, date: today, steps: newSteps, goal },
+        { onConflict: "user_id,date" }
+      );
+
+    // Check if just reached goal — update streak
+    if (newSteps >= goal && steps < goal) {
+      setStreak(prev => prev + 1);
+      setBestStreak(prev => Math.max(prev, streak + 1));
     }
-  }, []);
+  }, [user, steps, goal, streak]);
 
-  const progress = Math.min(data.steps / data.goal, 1);
-  const goalReached = data.steps >= data.goal;
-
-  const addSteps = useCallback((amount: number) => {
-    setData(prev => {
-      const newSteps = prev.steps + amount;
-      const justReached = newSteps >= prev.goal && prev.steps < prev.goal;
-      const today = getToday();
-
-      if (justReached && prev.lastCompletedDate !== today) {
-        const newStreak = prev.streak + 1;
-        return {
-          ...prev,
-          steps: newSteps,
-          streak: newStreak,
-          bestStreak: Math.max(newStreak, prev.bestStreak),
-          lastCompletedDate: today,
-        };
-      }
-      return { ...prev, steps: newSteps };
-    });
-  }, []);
-
-  const setGoal = useCallback((goal: number) => {
-    setData(prev => ({ ...prev, goal }));
-  }, []);
-
-  const resetDay = useCallback(() => {
-    setData(prev => ({ ...prev, steps: 0 }));
-  }, []);
+  const setGoal = useCallback(async (newGoal: number) => {
+    if (!user) return;
+    setGoalState(newGoal);
+    const today = new Date().toISOString().slice(0, 10);
+    await supabase
+      .from("daily_steps")
+      .upsert(
+        { user_id: user.id, date: today, steps, goal: newGoal },
+        { onConflict: "user_id,date" }
+      );
+  }, [user, steps]);
 
   const rewards: Reward[] = REWARDS.map(r => ({
     ...r,
-    unlocked: data.streak >= r.requiredStreak || data.bestStreak >= r.requiredStreak,
+    unlocked: streak >= r.requiredStreak || bestStreak >= r.requiredStreak,
   }));
 
   return {
-    steps: data.steps,
-    goal: data.goal,
-    streak: data.streak,
-    bestStreak: data.bestStreak,
-    progress,
-    goalReached,
-    rewards,
-    addSteps,
-    setGoal,
-    resetDay,
+    steps, goal, streak, bestStreak,
+    progress, goalReached, rewards,
+    addSteps, setGoal, loading,
   };
 }

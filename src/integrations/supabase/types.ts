@@ -14,7 +14,111 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      daily_steps: {
+        Row: {
+          created_at: string
+          date: string
+          goal: number
+          id: string
+          steps: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date?: string
+          goal?: number
+          id?: string
+          steps?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          goal?: number
+          id?: string
+          steps?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      friendships: {
+        Row: {
+          addressee_id: string
+          created_at: string
+          id: string
+          requester_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          addressee_id: string
+          created_at?: string
+          id?: string
+          requester_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          addressee_id?: string
+          created_at?: string
+          id?: string
+          requester_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_badges: {
+        Row: {
+          badge_id: string
+          id: string
+          unlocked_at: string
+          user_id: string
+        }
+        Insert: {
+          badge_id: string
+          id?: string
+          unlocked_at?: string
+          user_id: string
+        }
+        Update: {
+          badge_id?: string
+          id?: string
+          unlocked_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
