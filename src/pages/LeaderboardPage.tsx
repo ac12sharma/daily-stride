@@ -6,9 +6,9 @@ export default function LeaderboardPage() {
   const { entries, loading } = useLeaderboard();
 
   const podiumColors = [
-    "from-yellow-500/20 to-yellow-600/5",
-    "from-gray-400/20 to-gray-500/5",
-    "from-amber-700/20 to-amber-800/5",
+    "from-primary/20 to-primary/5",
+    "from-muted/40 to-muted/10",
+    "from-muted/30 to-muted/5",
   ];
 
   const podiumIcons = [
