@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Settings, Check } from "lucide-react";
+import { Target, Check } from "lucide-react";
 
 interface GoalSetterProps {
   goal: number;
@@ -18,14 +18,14 @@ export function GoalSetter({ goal, onSetGoal }: GoalSetterProps) {
         onClick={() => setOpen(!open)}
         className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors px-1 press-effect"
       >
-        <Settings className="h-3.5 w-3.5" />
-        <span className="font-medium">Daily goal: {goal.toLocaleString()} steps</span>
+        <Target className="h-3.5 w-3.5" />
+        <span className="font-medium tracking-wide">Daily goal · {goal.toLocaleString()} steps</span>
       </button>
 
       <AnimatePresence>
         {open && (
           <motion.div
-            className="flex gap-2 mt-3 flex-wrap"
+            className="flex gap-2 mt-3"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -34,14 +34,14 @@ export function GoalSetter({ goal, onSetGoal }: GoalSetterProps) {
               <button
                 key={p}
                 onClick={() => { onSetGoal(p); setOpen(false); }}
-                className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all press-effect ${
+                className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-all press-effect ${
                   p === goal
-                    ? "bg-primary text-primary-foreground glow-primary"
+                    ? "bg-primary text-primary-foreground glow-primary-strong"
                     : "glass-card text-secondary-foreground hover:bg-secondary"
                 }`}
               >
-                {p === goal && <Check className="inline h-3.5 w-3.5 mr-1" />}
-                {p.toLocaleString()}
+                {p === goal && <Check className="inline h-3.5 w-3.5 mr-1 -mt-0.5" />}
+                {(p / 1000).toFixed(0)}k
               </button>
             ))}
           </motion.div>

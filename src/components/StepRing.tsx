@@ -10,49 +10,38 @@ interface StepRingProps {
 }
 
 export function StepRing({ progress, steps, goal, goalReached }: StepRingProps) {
-  const size = 260;
-  const strokeWidth = 16;
+  const size = 280;
+  const strokeWidth = 18;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - progress);
   const prevGoalReached = useRef(goalReached);
   const [showCelebration, setShowCelebration] = useState(false);
+  const nearGoal = progress >= 0.85 && !goalReached;
 
   useEffect(() => {
     if (goalReached && !prevGoalReached.current) {
       setShowCelebration(true);
       confetti({
-        particleCount: 80,
-        spread: 60,
-        origin: { y: 0.45, x: 0.5 },
-        colors: ["#a3e635", "#84cc16", "#65a30d", "#ffffff"],
-        gravity: 1.2,
-        scalar: 0.8,
-        ticks: 120,
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.4, x: 0.5 },
+        colors: ["#a3e635", "#84cc16", "#65a30d", "#ffffff", "#fbbf24"],
+        gravity: 1.1,
+        scalar: 0.9,
+        ticks: 150,
       });
-      setTimeout(() => setShowCelebration(false), 2000);
+      setTimeout(() => setShowCelebration(false), 2500);
     }
     prevGoalReached.current = goalReached;
   }, [goalReached]);
 
-  const pct = Math.round(progress * 100);
-
   return (
     <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
-      {/* Ambient glow behind ring */}
-      {goalReached && (
-        <div
-          className="absolute inset-0 rounded-full opacity-30"
-          style={{
-            background: "radial-gradient(circle, hsla(82,85%,55%,0.25) 0%, transparent 70%)",
-          }}
-        />
-      )}
-
       <svg
         width={size}
         height={size}
-        className={`-rotate-90 ${goalReached ? "glow-pulse" : ""}`}
+        className={`-rotate-90 ${goalReached ? "glow-pulse" : nearGoal ? "pulse-ring-animation" : ""}`}
       >
         {/* Background track */}
         <circle
@@ -60,9 +49,21 @@ export function StepRing({ progress, steps, goal, goalReached }: StepRingProps) 
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="hsl(var(--border))"
+          stroke="hsl(var(--secondary))"
           strokeWidth={strokeWidth}
-          opacity={0.5}
+          opacity={0.4}
+        />
+        {/* Secondary faint glow track */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          stroke="hsl(var(--primary))"
+          strokeWidth={strokeWidth}
+          opacity={0.04}
+          strokeDasharray={circumference}
+          strokeDashoffset={0}
         />
         {/* Progress arc */}
         <motion.circle
@@ -76,12 +77,32 @@ export function StepRing({ progress, steps, goal, goalReached }: StepRingProps) 
           strokeDasharray={circumference}
           initial={{ strokeDashoffset: circumference }}
           animate={{ strokeDashoffset: offset }}
-          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        />
+        {/* Glow overlay for the progress arc */}
+        <motion.circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          stroke="url(#ringGlow)"
+          strokeWidth={strokeWidth + 8}
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          initial={{ strokeDashoffset: circumference }}
+          animate={{ strokeDashoffset: offset }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          opacity={0.15}
         />
         <defs>
           <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="hsl(82 85% 50%)" />
+            <stop offset="50%" stopColor="hsl(82 90% 60%)" />
+            <stop offset="100%" stopColor="hsl(82 95% 72%)" />
+          </linearGradient>
+          <linearGradient id="ringGlow" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="hsl(82 85% 55%)" />
-            <stop offset="100%" stopColor="hsl(82 90% 72%)" />
+            <stop offset="100%" stopColor="hsl(82 95% 72%)" />
           </linearGradient>
         </defs>
       </svg>
@@ -89,29 +110,32 @@ export function StepRing({ progress, steps, goal, goalReached }: StepRingProps) 
       {/* Center content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <motion.span
-          className={`text-5xl font-extrabold tracking-tight ${goalReached ? "text-gradient" : "text-foreground"}`}
+          className={`font-display text-[56px] font-bold tracking-tight leading-none ${goalReached ? "text-gradient" : "text-foreground"}`}
           key={steps}
-          initial={{ scale: 1.08, opacity: 0.7 }}
+          initial={{ scale: 1.06, opacity: 0.6 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: "spring", stiffness: 400, damping: 20 }}
+          transition={{ type: "spring", stiffness: 350, damping: 22 }}
         >
           {steps.toLocaleString()}
         </motion.span>
-        <span className="text-xs text-muted-foreground mt-1 font-medium tracking-wide uppercase">
-          of {goal.toLocaleString()} steps
+        <span className="text-[11px] text-muted-foreground mt-1 font-medium tracking-widest uppercase">
+          of {goal.toLocaleString()}
         </span>
-        <div className="mt-2 text-xs font-semibold text-muted-foreground">{pct}%</div>
 
         <AnimatePresence>
           {goalReached && (
-            <motion.span
-              className="text-[11px] font-bold text-primary mt-2 uppercase tracking-[0.2em]"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
+            <motion.div
+              className="flex items-center gap-1 mt-3 px-3 py-1 rounded-full"
+              style={{ background: "hsla(82,85%,55%,0.1)" }}
+              initial={{ opacity: 0, y: 8, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
-              🎯 Goal Reached
-            </motion.span>
+              <span className="text-[10px] font-bold text-primary uppercase tracking-[0.15em]">
+                🎯 Goal Reached
+              </span>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>
@@ -120,14 +144,14 @@ export function StepRing({ progress, steps, goal, goalReached }: StepRingProps) 
       <AnimatePresence>
         {showCelebration && (
           <motion.div
-            className="absolute inset-0 rounded-full"
+            className="absolute inset-0 rounded-full pointer-events-none"
             style={{
-              background: "radial-gradient(circle, hsla(82,85%,55%,0.2) 0%, transparent 60%)",
+              background: "radial-gradient(circle, hsla(82,85%,55%,0.15) 0%, transparent 55%)",
             }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1.1 }}
-            exit={{ opacity: 0, scale: 1.3 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ opacity: 1, scale: 1.2 }}
+            exit={{ opacity: 0, scale: 1.5 }}
+            transition={{ duration: 0.8 }}
           />
         )}
       </AnimatePresence>
