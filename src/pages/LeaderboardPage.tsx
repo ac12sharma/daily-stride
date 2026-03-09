@@ -12,9 +12,9 @@ export default function LeaderboardPage() {
   ];
 
   const podiumIcons = [
-    <Crown className="h-5 w-5 text-yellow-400" />,
-    <Medal className="h-5 w-5 text-gray-300" />,
-    <Medal className="h-5 w-5 text-amber-600" />,
+    <Crown className="h-5 w-5 text-streak" />,
+    <Medal className="h-5 w-5 text-secondary-foreground" />,
+    <Medal className="h-5 w-5 text-muted-foreground" />,
   ];
 
   return (
