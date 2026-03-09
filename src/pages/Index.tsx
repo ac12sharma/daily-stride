@@ -5,6 +5,7 @@ import { RewardsList } from "@/components/RewardsList";
 import { GoalSetter } from "@/components/GoalSetter";
 import { StepSimulator } from "@/components/StepSimulator";
 import { useStepTracker } from "@/hooks/useStepTracker";
+import { Activity } from "lucide-react";
 
 const Index = () => {
   const {
@@ -14,35 +15,40 @@ const Index = () => {
   } = useStepTracker();
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center px-6 py-10 max-w-md mx-auto">
+    <div className="min-h-screen bg-background flex flex-col items-center px-5 pt-14 pb-12 max-w-md mx-auto select-none">
       {/* Header */}
-      <motion.h1
-        className="text-lg font-bold tracking-tight text-foreground mb-8"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+      <motion.div
+        className="flex items-center gap-2 mb-10"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
       >
-        STRIDE
-      </motion.h1>
+        <Activity className="h-5 w-5 text-primary" />
+        <h1 className="text-base font-extrabold tracking-[0.15em] text-foreground uppercase">
+          Stride
+        </h1>
+      </motion.div>
 
       {/* Progress Ring */}
-      <StepRing progress={progress} steps={steps} goal={goal} goalReached={goalReached} />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+      >
+        <StepRing progress={progress} steps={steps} goal={goal} goalReached={goalReached} />
+      </motion.div>
 
-      {/* Streak */}
-      <div className="w-full mt-8 space-y-6">
+      {/* Content below ring */}
+      <div className="w-full mt-10 space-y-6">
         <StreakBadge streak={streak} bestStreak={bestStreak} />
-
-        {/* Goal Setter */}
         <GoalSetter goal={goal} onSetGoal={setGoal} />
-
-        {/* Simulator (for demo) */}
         <StepSimulator onAddSteps={addSteps} />
 
-        {/* Rewards */}
+        {/* Divider */}
+        <div className="w-full h-px bg-border opacity-50" />
+
         <RewardsList rewards={rewards} currentStreak={streak} />
       </div>
-
-      {/* Footer spacer */}
-      <div className="h-10" />
     </div>
   );
 };

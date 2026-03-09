@@ -10,10 +10,10 @@ interface RewardsListProps {
 export function RewardsList({ rewards, currentStreak }: RewardsListProps) {
   return (
     <div className="w-full space-y-3">
-      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest px-1">
+      <h2 className="text-[11px] font-bold text-muted-foreground uppercase tracking-[0.2em] px-1">
         Rewards
       </h2>
-      <div className="grid gap-3">
+      <div className="grid gap-2.5">
         {rewards.map((reward, i) => {
           const isNext = !reward.unlocked && (i === 0 || rewards[i - 1].unlocked);
           const daysLeft = reward.requiredStreak - currentStreak;
@@ -21,21 +21,40 @@ export function RewardsList({ rewards, currentStreak }: RewardsListProps) {
           return (
             <motion.div
               key={reward.id}
-              className={`rounded-2xl p-4 flex items-center gap-4 transition-colors ${
+              className={`rounded-2xl p-4 flex items-center gap-4 press-effect ${
                 reward.unlocked
-                  ? "bg-card border border-primary/20"
-                  : "bg-card/50 border border-border"
+                  ? "glass-card glow-primary"
+                  : "glass-card"
               }`}
-              initial={{ opacity: 0, x: -10 }}
+              initial={{ opacity: 0, x: -8 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.1 * i }}
+              transition={{ delay: 0.06 * i, duration: 0.4 }}
+              whileTap={{ scale: 0.97 }}
             >
               <div
-                className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${
-                  reward.unlocked ? "bg-primary/10" : "bg-muted"
+                className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl relative ${
+                  reward.unlocked ? "" : ""
                 }`}
+                style={{
+                  background: reward.unlocked
+                    ? "hsla(82,85%,55%,0.12)"
+                    : "hsla(0,0%,100%,0.04)",
+                }}
               >
-                {reward.unlocked ? reward.icon : <Lock className="h-5 w-5 text-muted-foreground" />}
+                {reward.unlocked ? (
+                  <motion.span
+                    initial={{ scale: 0.5, rotate: -20 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    {reward.icon}
+                  </motion.span>
+                ) : (
+                  <div className="relative flex items-center justify-center">
+                    <span className="blur-locked text-lg">{reward.icon}</span>
+                    <Lock className="absolute h-4 w-4 text-muted-foreground" />
+                  </div>
+                )}
               </div>
 
               <div className="flex-1 min-w-0">
@@ -44,7 +63,7 @@ export function RewardsList({ rewards, currentStreak }: RewardsListProps) {
                 </p>
                 <p className="text-xs text-muted-foreground">
                   {reward.unlocked
-                    ? "Unlocked!"
+                    ? "Unlocked ✓"
                     : isNext
                       ? `${daysLeft} day${daysLeft !== 1 ? "s" : ""} to go`
                       : reward.description}
@@ -52,7 +71,15 @@ export function RewardsList({ rewards, currentStreak }: RewardsListProps) {
               </div>
 
               {reward.unlocked && (
-                <span className="text-xs font-bold text-primary uppercase">✓</span>
+                <motion.div
+                  className="w-6 h-6 rounded-full flex items-center justify-center"
+                  style={{ background: "hsla(82,85%,55%,0.15)" }}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", delay: 0.1 * i }}
+                >
+                  <span className="text-xs font-bold text-primary">✓</span>
+                </motion.div>
               )}
             </motion.div>
           );

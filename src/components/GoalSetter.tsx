@@ -16,10 +16,10 @@ export function GoalSetter({ goal, onSetGoal }: GoalSetterProps) {
     <div className="w-full">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors px-1"
+        className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors px-1 press-effect"
       >
         <Settings className="h-3.5 w-3.5" />
-        Daily goal: {goal.toLocaleString()} steps
+        <span className="font-medium">Daily goal: {goal.toLocaleString()} steps</span>
       </button>
 
       <AnimatePresence>
@@ -34,10 +34,10 @@ export function GoalSetter({ goal, onSetGoal }: GoalSetterProps) {
               <button
                 key={p}
                 onClick={() => { onSetGoal(p); setOpen(false); }}
-                className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+                className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all press-effect ${
                   p === goal
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-card text-secondary-foreground hover:bg-secondary"
+                    ? "bg-primary text-primary-foreground glow-primary"
+                    : "glass-card text-secondary-foreground hover:bg-secondary"
                 }`}
               >
                 {p === goal && <Check className="inline h-3.5 w-3.5 mr-1" />}
