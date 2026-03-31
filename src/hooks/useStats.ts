@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./useAuth";
 import { format, subDays } from "date-fns";
+import { calculateStreaks } from "@/lib/activity";
+import { logger } from "@/lib/logger";
 
 export function useStats() {
   const { user } = useAuth();
@@ -13,75 +15,65 @@ export function useStats() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      setLoading(false);
+      return;
+    }
 
     const fetchStats = async () => {
-      const today = new Date();
-      const weekAgo = subDays(today, 6);
+      try {
+        const today = new Date();
+        const weekAgo = subDays(today, 6);
 
-      const { data } = await supabase
-        .from("daily_steps")
-        .select("date, steps, goal")
-        .eq("user_id", user.id)
-        .gte("date", format(weekAgo, "yyyy-MM-dd"))
-        .order("date", { ascending: true });
+        const { data, error } = await supabase
+          .from("daily_steps")
+          .select("date, steps, goal")
+          .eq("user_id", user.id)
+          .gte("date", format(weekAgo, "yyyy-MM-dd"))
+          .order("date", { ascending: true });
 
-      // Build 7-day chart data
-      const dayMap = new Map((data || []).map(d => [d.date, d.steps]));
-      const weekly = [];
-      for (let i = 6; i >= 0; i--) {
-        const d = subDays(today, i);
-        const dateStr = format(d, "yyyy-MM-dd");
-        weekly.push({
-          day: format(d, "EEE"),
-          steps: dayMap.get(dateStr) || 0,
-        });
-      }
-      setWeeklyData(weekly);
+        if (error) throw error;
 
-      // Fetch all-time stats
-      const { data: allData } = await supabase
-        .from("daily_steps")
-        .select("date, steps, goal")
-        .eq("user_id", user.id)
-        .order("date", { ascending: false });
+        const dayMap = new Map((data || []).map((d) => [d.date, d.steps]));
+        const weekly = [];
+        for (let i = 6; i >= 0; i--) {
+          const d = subDays(today, i);
+          const dateStr = format(d, "yyyy-MM-dd");
+          weekly.push({
+            day: format(d, "EEE"),
+            steps: dayMap.get(dateStr) || 0,
+          });
+        }
+        setWeeklyData(weekly);
 
-      if (allData && allData.length > 0) {
-        const total = allData.reduce((sum, d) => sum + d.steps, 0);
+        const { data: allData, error: allError } = await supabase
+          .from("daily_steps")
+          .select("date, steps, goal")
+          .eq("user_id", user.id)
+          .order("date", { ascending: false });
+
+        if (allError) throw allError;
+
+        const rows = allData ?? [];
+        const total = rows.reduce((sum, d) => sum + d.steps, 0);
         setTotalSteps(total);
-        setAvgSteps(Math.round(total / allData.length));
+        setAvgSteps(rows.length > 0 ? Math.round(total / rows.length) : 0);
 
-        // Streak calc
-        const completed = new Set(allData.filter(d => d.steps >= d.goal).map(d => d.date));
-        let streak = 0;
-        const check = new Date();
-        const todayStr = format(check, "yyyy-MM-dd");
-        if (!completed.has(todayStr)) check.setDate(check.getDate() - 1);
-
-        while (completed.has(format(check, "yyyy-MM-dd"))) {
-          streak++;
-          check.setDate(check.getDate() - 1);
-        }
-        setCurrentStreak(streak);
-
-        const sorted = [...completed].sort();
-        let best = 0, temp = 0;
-        for (let i = 0; i < sorted.length; i++) {
-          if (i === 0) { temp = 1; }
-          else {
-            const prev = new Date(sorted[i - 1]);
-            const curr = new Date(sorted[i]);
-            temp = (curr.getTime() - prev.getTime()) / 86400000 === 1 ? temp + 1 : 1;
-          }
-          best = Math.max(best, temp);
-        }
+        const completedDates = rows.filter((d) => d.steps >= d.goal).map((d) => d.date);
+        const { currentStreak: current, bestStreak: best } = calculateStreaks(completedDates);
+        setCurrentStreak(current);
         setBestStreak(best);
+      } catch (error) {
+        logger.error("Failed to load stats", {
+          userId: user.id,
+          error: error instanceof Error ? error.message : String(error),
+        });
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
-    fetchStats();
+    void fetchStats();
   }, [user]);
 
   return { weeklyData, totalSteps, avgSteps, currentStreak, bestStreak, loading };

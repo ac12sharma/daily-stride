@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "Daily Stride",
+    "slug": "daily-stride-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "dailystride",
+    "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#121619"
+      }
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
