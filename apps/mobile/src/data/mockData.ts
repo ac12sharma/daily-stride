@@ -4,7 +4,9 @@ export const homeStats = {
   steps: 6840,
   goal: 10000,
   streak: 12,
-  weeklyDelta: 18,
+  bestStreak: 19,
+  distanceMiles: 3.4,
+  activeMinutes: 62,
 };
 
 export const leaderboard: LeaderboardItem[] = [
