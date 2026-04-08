@@ -4,6 +4,7 @@ import { HomeScreen } from '../screens/HomeScreen';
 import { LeaderboardScreen } from '../screens/LeaderboardScreen';
 import { RewardsScreen } from '../screens/RewardsScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
+import { ActivityHistoryView } from '../screens/ActivityHistoryView';
 import { palette } from '../theme/palette';
 
 const Tab = createBottomTabNavigator();
@@ -25,6 +26,7 @@ export function AppTabs() {
         tabBarIcon: ({ color, size }) => {
           const iconMap: Record<string, keyof typeof Ionicons.glyphMap> = {
             Home: 'walk-outline',
+            'Activity History': 'bar-chart-outline',
             Leaderboard: 'trophy-outline',
             Rewards: 'gift-outline',
             Profile: 'person-outline',
@@ -34,6 +36,7 @@ export function AppTabs() {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Activity History" component={ActivityHistoryView} />
       <Tab.Screen name="Leaderboard" component={LeaderboardScreen} />
       <Tab.Screen name="Rewards" component={RewardsScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />

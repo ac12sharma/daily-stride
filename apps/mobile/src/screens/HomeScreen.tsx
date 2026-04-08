@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { DailyGoalProgress } from '../components/DailyGoalProgress';
 import { MetricCard } from '../components/MetricCard';
 import { ScreenContainer } from '../components/ScreenContainer';
@@ -9,6 +10,8 @@ import { homeStats } from '../data/mockData';
 import { palette } from '../theme/palette';
 
 export function HomeScreen() {
+  const navigation = useNavigation();
+
   return (
     <ScreenContainer>
       <View>
@@ -19,6 +22,14 @@ export function HomeScreen() {
       <StepCountHero steps={homeStats.steps} />
       <DailyGoalProgress steps={homeStats.steps} goal={homeStats.goal} />
       <StreakIndicator streak={homeStats.streak} bestStreak={homeStats.bestStreak} />
+
+      <Pressable style={styles.historyCard} onPress={() => navigation.navigate('Activity History' as never)}>
+        <View>
+          <Text style={styles.historyLabel}>Activity history</Text>
+          <Text style={styles.historyText}>View your last 7 days of steps</Text>
+        </View>
+        <Ionicons name="chevron-forward" size={18} color={palette.textSecondary} />
+      </Pressable>
 
       <View style={styles.row}>
         <MetricCard
@@ -45,6 +56,29 @@ const styles = StyleSheet.create({
   subtitle: {
     color: palette.textSecondary,
     marginTop: 6,
+  },
+  historyCard: {
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: palette.border,
+    backgroundColor: palette.surface,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  historyLabel: {
+    color: palette.textPrimary,
+    fontSize: 14,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+  },
+  historyText: {
+    color: palette.textSecondary,
+    marginTop: 2,
+    fontSize: 12,
   },
   row: {
     flexDirection: 'row',
