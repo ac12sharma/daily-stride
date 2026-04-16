@@ -20,10 +20,12 @@ export const activityHistory = [
 ];
 
 export const leaderboard: LeaderboardItem[] = [
-  { id: 'u2', name: 'Maya', steps: 13240, avatar: 'M' },
-  { id: 'u3', name: 'Chris', steps: 12190, avatar: 'C' },
-  { id: 'u1', name: 'You', steps: 6840, avatar: 'Y', isCurrentUser: true },
-  { id: 'u4', name: 'Avery', steps: 6510, avatar: 'A' },
+  { id: 'u2', name: 'Maya', steps: 18440, avatar: 'M' },
+  { id: 'u5', name: 'Jordan', steps: 17120, avatar: 'J' },
+  { id: 'u3', name: 'Chris', steps: 16390, avatar: 'C' },
+  { id: 'u6', name: 'Riley', steps: 14110, avatar: 'R' },
+  { id: 'u1', name: 'You', steps: 12840, avatar: 'Y', isCurrentUser: true },
+  { id: 'u4', name: 'Avery', steps: 11750, avatar: 'A' },
 ];
 
 export const rewards: Reward[] = [
