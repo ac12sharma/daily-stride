@@ -2,11 +2,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View } from 'react-native';
 import { ScreenContainer } from '../components/ScreenContainer';
 import { leaderboard } from '../data/mockData';
+import { getLeaderboardRows } from '../data/stepDataStore';
 import { palette } from '../theme/palette';
 
 const podiumLabels = ['1st', '2nd', '3rd'];
 
 export function LeaderboardView() {
+  const rows = getLeaderboardRows(leaderboard);
+
   return (
     <ScreenContainer>
       <View>
@@ -14,7 +17,7 @@ export function LeaderboardView() {
         <Text style={styles.subtitle}>Compete with your crew and climb the rankings.</Text>
       </View>
 
-      {leaderboard.map((entry, index) => {
+      {rows.map((entry, index) => {
         const rank = index + 1;
         const isPodium = rank <= 3;
 

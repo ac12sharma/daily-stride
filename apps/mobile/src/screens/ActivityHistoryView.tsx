@@ -1,11 +1,28 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { ScreenContainer } from '../components/ScreenContainer';
-import { activityHistory } from '../data/mockData';
+import { getCurrentUserStepHistory } from '../data/stepDataStore';
+import type { StepData } from '../types';
 import { palette } from '../theme/palette';
 
-const MAX_STEPS = Math.max(...activityHistory.map((entry) => entry.steps));
+const DAY_LABEL = new Intl.DateTimeFormat('en-US', { weekday: 'short' });
+const DATE_LABEL = new Intl.DateTimeFormat('en-US', {
+  weekday: 'short',
+  month: 'short',
+  day: 'numeric',
+});
+
+function formatDay(stepData: StepData) {
+  return DAY_LABEL.format(stepData.date);
+}
+
+function formatDate(stepData: StepData) {
+  return DATE_LABEL.format(stepData.date);
+}
 
 export function ActivityHistoryView() {
+  const history = getCurrentUserStepHistory();
+  const maxSteps = Math.max(...history.map((entry) => entry.steps));
+
   return (
     <ScreenContainer>
       <View>
@@ -16,12 +33,12 @@ export function ActivityHistoryView() {
       <View style={styles.chartCard}>
         <Text style={styles.sectionLabel}>Weekly chart</Text>
         <View style={styles.chartRow}>
-          {activityHistory.map((entry) => {
-            const barHeight = Math.max(20, Math.round((entry.steps / MAX_STEPS) * 120));
+          {history.map((entry) => {
+            const barHeight = Math.max(20, Math.round((entry.steps / maxSteps) * 120));
             return (
-              <View key={entry.date} style={styles.barWrap}>
+              <View key={entry.id} style={styles.barWrap}>
                 <View style={[styles.bar, { height: barHeight }]} />
-                <Text style={styles.barLabel}>{entry.shortDay}</Text>
+                <Text style={styles.barLabel}>{formatDay(entry)}</Text>
               </View>
             );
           })}
@@ -30,9 +47,9 @@ export function ActivityHistoryView() {
 
       <View style={styles.listWrap}>
         <Text style={styles.sectionLabel}>Daily totals</Text>
-        {activityHistory.map((entry) => (
-          <View key={`${entry.date}-row`} style={styles.rowCard}>
-            <Text style={styles.date}>{entry.dateLabel}</Text>
+        {history.map((entry) => (
+          <View key={`${entry.id}-row`} style={styles.rowCard}>
+            <Text style={styles.date}>{formatDate(entry)}</Text>
             <Text style={styles.steps}>{entry.steps.toLocaleString()}</Text>
           </View>
         ))}

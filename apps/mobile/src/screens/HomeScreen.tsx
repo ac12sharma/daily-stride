@@ -7,10 +7,12 @@ import { ScreenContainer } from '../components/ScreenContainer';
 import { StepCountHero } from '../components/StepCountHero';
 import { StreakIndicator } from '../components/StreakIndicator';
 import { homeStats } from '../data/mockData';
+import { getCurrentUserTodayStepData } from '../data/stepDataStore';
 import { palette } from '../theme/palette';
 
 export function HomeScreen() {
   const navigation = useNavigation();
+  const todayStepData = getCurrentUserTodayStepData();
 
   return (
     <ScreenContainer>
@@ -19,8 +21,8 @@ export function HomeScreen() {
         <Text style={styles.subtitle}>Track your movement and hit your daily goal.</Text>
       </View>
 
-      <StepCountHero steps={homeStats.steps} />
-      <DailyGoalProgress steps={homeStats.steps} goal={homeStats.goal} />
+      <StepCountHero steps={todayStepData.steps} />
+      <DailyGoalProgress steps={todayStepData.steps} goal={homeStats.goal} />
       <StreakIndicator streak={homeStats.streak} bestStreak={homeStats.bestStreak} />
 
       <Pressable style={styles.historyCard} onPress={() => navigation.navigate('Activity History' as never)}>

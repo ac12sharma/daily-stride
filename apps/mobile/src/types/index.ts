@@ -1,7 +1,12 @@
+export type StepData = {
+  id: string;
+  date: Date;
+  steps: number;
+};
+
 export type LeaderboardItem = {
   id: string;
   name: string;
-  steps: number;
   avatar: string;
   isCurrentUser?: boolean;
 };
