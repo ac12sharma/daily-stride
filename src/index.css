@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 4%;
+  --foreground: 0 0% 95%;
+  --primary: 82 85% 55%;
+  --primary-foreground: 0 0% 4%;
+  --secondary: 0 0% 12%;
+  --secondary-foreground: 0 0% 90%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 55%;
+  --accent: 82 85% 55%;
+  --accent-foreground: 0 0% 4%;
+  --card: 0 0% 8%;
+  --card-foreground: 0 0% 95%;
+  --destructive: 0 70% 50%;
+  --destructive-foreground: 0 0% 95%;
+  --streak: 35 90% 55%;
+  --locked: 0 0% 25%;
+  --radius: 1rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app-bg {
+  background: radial-gradient(ellipse at 50% 0%, hsl(82 85% 55% / 0.06) 0%, transparent 60%),
+    hsl(var(--background));
+  min-height: 100dvh;
+}
+
+.glass-card {
+  background: hsl(0 0% 100% / 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid hsl(0 0% 100% / 0.08);
+}
+
+.glass-card-elevated {
+  background: hsl(0 0% 100% / 0.08);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border: 1px solid hsl(0 0% 100% / 0.12);
+  box-shadow: 0 8px 32px hsl(0 0% 0% / 0.3), inset 0 1px 0 hsl(0 0% 100% / 0.06);
+}
+
+.glow-primary {
+  box-shadow: 0 0 20px hsl(82 85% 55% / 0.3), 0 0 60px hsl(82 85% 55% / 0.1);
+}
+
+.press-effect {
+  transition: transform 0.15s ease;
+}
+.press-effect:active {
+  transform: scale(0.96);
+}
+
+.shimmer {
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    hsl(0 0% 100% / 0.12) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { filter: drop-shadow(0 0 8px hsl(82 85% 55% / 0.4)); }
+  50% { filter: drop-shadow(0 0 24px hsl(82 85% 55% / 0.7)); }
+}
+
+.blur-locked {
+  filter: blur(4px) saturate(0.3);
+  opacity: 0.5;
+}
