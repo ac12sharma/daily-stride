@@ -12,7 +12,6 @@ export default function FriendsPage() {
     sendRequest,
     acceptRequest,
     declineRequest,
-    removeFriend,
   } = useFriends();
 
   const [searchQuery, setSearchQuery] = useState("");
