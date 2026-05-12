@@ -1,57 +1,58 @@
-# Daily Stride MVP Audit
+# Daily Stride Repository Stability Audit (May 12, 2026)
 
-## Repository Structure
-- `src/`: React frontend (pages, hooks, reusable components).
-- `supabase/`: Database migration and Supabase project config.
-- `public/`: static assets.
-- Root build/tooling files: Vite, Tailwind, TypeScript, ESLint, Vitest.
+## Scope and Validation Performed
+- Repository structure inspection
+- Dependency and lockfile validation
+- Build verification (`npm run build`)
+- CI/workflow relevance check
+- Stack consistency review against iOS-focused fitness MVP goals
 
-## Current Architecture
-- **Frontend**: Vite + React + TypeScript + Tailwind/shadcn UI.
-- **Auth**: OAuth via Lovable cloud auth and Supabase session management.
-- **Data/API layer**: Supabase JS client called directly from React hooks.
-- **Database**: PostgreSQL on Supabase with RLS policies.
+## Critical Issues
+1. **Dependency install is not reproducible with `npm ci`.**
+   - `npm ci` fails because `package-lock.json` is out of sync with `package.json`.
+   - This blocks reliable local setup and CI reproducibility.
 
-## How the App Works Today
-1. User authenticates with Google/Apple.
-2. Protected routes render home/leaderboard/badges/stats.
-3. Home page displays step progress and allows **simulated step increments** (+500/+1000/+2500).
-4. Step and goal updates are upserted into `daily_steps`.
-5. Streak and best streak are computed in client hooks from historical data.
-6. Leaderboard reads today's `daily_steps` and joins profile metadata.
-7. Badges page reads pre-unlocked `user_badges`; no automated badge-award pipeline in app.
-8. Stats page computes totals and weekly chart on the client.
+2. **Invalid React versions in manifest.**
+   - `react` and `react-dom` were pinned to `^18.3.1`, which is not resolvable in this environment and caused invalid installs.
+   - Result: widespread TypeScript/module-resolution failures during build.
 
-## MVP Gaps vs Production Fitness App
-- No true step ingestion from device sensors/wearables.
-- No challenge domain model or challenge workflows.
-- No friends-only leaderboard filtering or social graph UX despite `friendships` table.
-- No push notifications, reminders, or anti-cheat controls.
-- No backend service/business logic tier; all logic is client-side.
-- No observability, analytics, SLOs, or incident tooling.
+3. **CI pipeline was misconfigured for wrong runtime.**
+   - The repo contained a Deno workflow that runs `deno lint` and `deno test` despite this being a Vite + React + TypeScript app.
+   - This guarantees irrelevant CI failures and hides actual web build breakages.
 
-## Key Risks
-- Client-side step simulation makes score manipulation trivial.
-- Streak/badge logic duplicated across hooks and can drift.
-- RLS policy allows broad read access for today's leaderboard records.
-- Minimal tests (single smoke test) and no integration/e2e suite.
-- Repository README remains Lovable boilerplate.
+## Warnings
+1. **Mixed technology footprint (web + iOS skeleton in same repo).**
+   - `AppSkeleton/*.swift` exists beside the React app.
+   - This is not inherently broken, but should be explicitly structured (monorepo with clear app boundaries) to avoid confusion.
 
-## Recommended Next Steps (90-day)
-### Phase 1 (1-2 weeks)
-- Replace simulator with trusted step ingestion architecture (mobile bridge/API).
-- Centralize streak/badge calculations in SQL functions or server functions.
-- Add robust error handling/loading states for all Supabase calls.
-- Replace README with real setup + architecture docs.
+2. **Dual lockfile ecosystem indicator.**
+   - `bun.lock` existed despite npm-based scripts/workflows.
+   - Mixed package manager artifacts create drift and onboarding friction.
 
-### Phase 2 (2-6 weeks)
-- Add challenge tables, challenge participation, and reward issuance.
-- Implement friends leaderboard (accepted friendships) and privacy settings.
-- Build notification service (goal reminders, streak at risk, challenge updates).
-- Add meaningful automated tests (unit + integration + basic e2e).
+3. **Network/policy constraints can block install validation.**
+   - During this audit run, `npm install` hit a registry access error (`403` for `picomatch`), so full reinstall could not be completed in this environment.
 
-### Phase 3 (6-12 weeks)
-- Add anti-cheat heuristics and anomaly detection pipelines.
-- Add event analytics + observability dashboards.
-- Add AI coach service layer (prompt safety, user context, recommendation guardrails).
-- Introduce background jobs/queue for badge/challenge processing at scale.
+## Cleanup Applied in This Branch
+- Replaced invalid React pins with stable React 18.2-compatible versions in `package.json`.
+- Removed irrelevant Deno workflow.
+- Added Node-based CI workflow for install + build checks.
+- Removed `bun.lock` to keep package management consistent with npm.
+
+## Recommended Architecture Direction
+For a clean iOS-focused MVP inspired by Strava/Apple Fitness:
+1. **Adopt explicit monorepo layout**
+   - `apps/web` (current Vite app) and `apps/ios` (Swift app) or remove one if not actively used.
+2. **Single package manager policy**
+   - Keep npm-only (or pnpm-only), one lockfile, and enforce via CI.
+3. **Shared domain contracts**
+   - Keep step/streak/leaderboard models in shared schema/docs and avoid duplicating logic across clients.
+4. **CI per app boundary**
+   - Separate workflow jobs for web and iOS targets.
+
+## Current Local Runnability Status
+- **Not fully verifiable in this environment** due to external registry access restriction encountered during reinstall.
+- **Structurally improved for local runnability** after dependency/version and CI cleanup.
+- Next required validation on an unrestricted machine:
+  1. `npm install`
+  2. `npm run build`
+  3. `npm run dev`
