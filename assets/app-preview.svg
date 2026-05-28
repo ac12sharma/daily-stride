@@ -1,0 +1,687 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 780" width="1600" height="780" style="font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;">
+  <defs>
+    <!-- Clip paths for each phone screen -->
+    <clipPath id="clip1"><rect x="134" y="38" width="236" height="521" rx="34"/></clipPath>
+    <clipPath id="clip2"><rect x="410" y="38" width="236" height="521" rx="34"/></clipPath>
+    <clipPath id="clip3"><rect x="686" y="38" width="236" height="521" rx="34"/></clipPath>
+    <clipPath id="clip4"><rect x="962" y="38" width="236" height="521" rx="34"/></clipPath>
+    <clipPath id="clip5"><rect x="1238" y="38" width="236" height="521" rx="34"/></clipPath>
+
+    <!-- Map tile pattern (dark) -->
+    <pattern id="mapGrid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <rect width="20" height="20" fill="#0d0d1a"/>
+      <line x1="0" y1="10" x2="20" y2="10" stroke="#1a1a2e" stroke-width="0.5"/>
+      <line x1="10" y1="0" x2="10" y2="20" stroke="#1a1a2e" stroke-width="0.5"/>
+    </pattern>
+
+    <!-- Drop shadow filter for phones -->
+    <filter id="phoneShadow" x="-10%" y="-5%" width="120%" height="115%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="rgba(0,0,0,0.7)" flood-opacity="1"/>
+    </filter>
+
+    <!-- Card shadow -->
+    <filter id="cardShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.5)"/>
+    </filter>
+
+    <!-- Gradient: orange -->
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FC4C02"/>
+      <stop offset="100%" style="stop-color:#FF6B35"/>
+    </linearGradient>
+
+    <!-- Gradient: premium gold -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="100%" style="stop-color:#FFA000"/>
+    </linearGradient>
+
+    <!-- Gradient: premium background glow -->
+    <linearGradient id="premiumBg" x1="50%" y1="0%" x2="50%" y2="40%">
+      <stop offset="0%" style="stop-color:rgba(255,215,0,0.15)"/>
+      <stop offset="100%" style="stop-color:#0A0A0A"/>
+    </linearGradient>
+
+    <!-- Gradient: map overlay fade for activity detail -->
+    <linearGradient id="mapFade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="70%" stop-color="transparent"/>
+      <stop offset="100%" stop-color="#0A0A0A"/>
+    </linearGradient>
+
+    <!-- GPS route gradient -->
+    <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FC4C02"/>
+      <stop offset="100%" style="stop-color:#FF6B35"/>
+    </linearGradient>
+
+    <!-- Bar chart gradient -->
+    <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" style="stop-color:#FC4C02"/>
+      <stop offset="100%" style="stop-color:rgba(252,76,2,0.3)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ===== BACKGROUND ===== -->
+  <rect width="1600" height="780" fill="#050505"/>
+
+  <!-- Subtle background grid -->
+  <rect width="1600" height="780" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="0.5"/>
+  <!-- Grid lines -->
+  <g stroke="rgba(255,255,255,0.025)" stroke-width="0.5">
+    <line x1="320" y1="0" x2="320" y2="780"/>
+    <line x1="640" y1="0" x2="640" y2="780"/>
+    <line x1="960" y1="0" x2="960" y2="780"/>
+    <line x1="1280" y1="0" x2="1280" y2="780"/>
+    <line x1="0" y1="195" x2="1600" y2="195"/>
+    <line x1="0" y1="390" x2="1600" y2="390"/>
+    <line x1="0" y1="585" x2="1600" y2="585"/>
+  </g>
+
+  <!-- App name watermark -->
+  <text x="800" y="750" text-anchor="middle" fill="rgba(255,255,255,0.12)" font-size="13" font-weight="600" letter-spacing="6">DAILY STRIDE  ·  iOS &amp; ANDROID  ·  APP STORE PREVIEW</text>
+
+  <!-- Screen labels -->
+  <text x="252" y="600" text-anchor="middle" fill="#FC4C02" font-size="12" font-weight="700" letter-spacing="2">FEED</text>
+  <text x="528" y="600" text-anchor="middle" fill="#FC4C02" font-size="12" font-weight="700" letter-spacing="2">RECORD</text>
+  <text x="804" y="600" text-anchor="middle" fill="#FC4C02" font-size="12" font-weight="700" letter-spacing="2">ACTIVITY</text>
+  <text x="1080" y="600" text-anchor="middle" fill="#FC4C02" font-size="12" font-weight="700" letter-spacing="2">TRAINING</text>
+  <text x="1356" y="600" text-anchor="middle" fill="#FC4C02" font-size="12" font-weight="700" letter-spacing="2">PREMIUM</text>
+
+  <!-- Decorative line under labels -->
+  <line x1="80" y1="608" x2="1520" y2="608" stroke="rgba(252,76,2,0.2)" stroke-width="1"/>
+
+
+  <!-- ================================================================ -->
+  <!-- PHONE 1: FEED SCREEN -->
+  <!-- ================================================================ -->
+  <g filter="url(#phoneShadow)">
+    <!-- Phone body -->
+    <rect x="128" y="24" width="248" height="549" rx="42" fill="#1A1A1A"/>
+    <rect x="130" y="26" width="244" height="545" rx="40" fill="#111111" stroke="#2A2A2A" stroke-width="1.5"/>
+
+    <!-- Screen -->
+    <rect x="134" y="38" width="236" height="521" rx="34" fill="#0A0A0A"/>
+
+    <!-- Side buttons -->
+    <rect x="124" y="110" width="4" height="36" rx="2" fill="#222"/>
+    <rect x="124" y="158" width="4" height="60" rx="2" fill="#222"/>
+    <rect x="380" y="130" width="4" height="48" rx="2" fill="#222"/>
+
+    <!-- Dynamic island -->
+    <rect x="213" y="48" width="78" height="22" rx="11" fill="#000"/>
+    <circle cx="271" cy="59" r="4" fill="#0d0d0d"/>
+  </g>
+
+  <!-- FEED SCREEN CONTENT -->
+  <g clip-path="url(#clip1)">
+    <rect x="134" y="38" width="236" height="521" fill="#0A0A0A"/>
+
+    <!-- Status bar -->
+    <text x="148" y="56" fill="white" font-size="9" font-weight="600">9:41</text>
+    <text x="340" y="56" fill="white" font-size="8" text-anchor="end">●●● ▲ 🔋</text>
+
+    <!-- Header -->
+    <rect x="134" y="68" width="236" height="44" fill="#0A0A0A"/>
+    <text x="152" y="96" fill="white" font-size="20" font-weight="900" letter-spacing="1">STRIDE</text>
+    <!-- Orange dot accent -->
+    <circle cx="213" cy="87" r="4" fill="#FC4C02"/>
+    <!-- Bell icon area -->
+    <rect x="340" y="78" width="24" height="24" rx="12" fill="#141414" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <text x="352" y="93" text-anchor="middle" fill="white" font-size="12">🔔</text>
+
+    <!-- Divider -->
+    <line x1="134" y1="112" x2="370" y2="112" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <!-- Activity Card 1 -->
+    <rect x="142" y="120" width="220" height="132" rx="12" fill="#141414" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <!-- Athlete row inside card -->
+    <circle cx="158" cy="136" r="10" fill="#FC4C02"/>
+    <text x="158" y="140" text-anchor="middle" fill="white" font-size="9" font-weight="700">A</text>
+    <text x="172" y="133" fill="white" font-size="10" font-weight="600">Alex Martinez</text>
+    <text x="172" y="144" fill="#606060" font-size="8">Morning Run · 2h ago</text>
+    <!-- Run icon -->
+    <text x="348" y="140" text-anchor="end" fill="#FC4C02" font-size="11">🏃</text>
+
+    <!-- Mini map placeholder -->
+    <rect x="142" y="152" width="220" height="54" fill="url(#mapGrid)"/>
+    <!-- Route path on mini map -->
+    <polyline points="160,185 175,175 190,178 205,165 220,170 235,160 250,164 265,155 275,165 285,170 295,162 310,158 330,165 345,155" fill="none" stroke="#FC4C02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Stats row inside card -->
+    <text x="152" y="220" fill="white" font-size="11" font-weight="800">12.4</text>
+    <text x="152" y="230" fill="#606060" font-size="7" text-transform="uppercase">KM</text>
+    <text x="200" y="220" fill="white" font-size="11" font-weight="800">4:52</text>
+    <text x="200" y="230" fill="#606060" font-size="7">/KM PACE</text>
+    <text x="248" y="220" fill="white" font-size="11" font-weight="800">1:01</text>
+    <text x="248" y="230" fill="#606060" font-size="7">HR AVG</text>
+    <!-- Kudo bar -->
+    <text x="300" y="225" text-anchor="end" fill="#606060" font-size="9">❤ 14 kudos</text>
+
+    <!-- Activity Card 2 -->
+    <rect x="142" y="260" width="220" height="100" rx="12" fill="#141414" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <circle cx="158" cy="276" r="10" fill="#2E86AB"/>
+    <text x="158" y="280" text-anchor="middle" fill="white" font-size="9" font-weight="700">S</text>
+    <text x="172" y="273" fill="white" font-size="10" font-weight="600">Sarah Chen</text>
+    <text x="172" y="284" fill="#606060" font-size="8">Evening Ride · 5h ago</text>
+    <text x="348" y="280" text-anchor="end" fill="#2E86AB" font-size="11">🚴</text>
+
+    <rect x="142" y="291" width="220" height="40" fill="url(#mapGrid)"/>
+    <polyline points="155,320 170,312 190,316 215,305 240,309 260,300 280,303 300,294 320,298 345,290" fill="none" stroke="#2E86AB" stroke-width="2" stroke-linecap="round"/>
+
+    <text x="152" y="348" fill="white" font-size="10" font-weight="800">34.8</text>
+    <text x="152" y="357" fill="#606060" font-size="7">KM</text>
+    <text x="196" y="348" fill="white" font-size="10" font-weight="800">28.3</text>
+    <text x="196" y="357" fill="#606060" font-size="7">KM/H</text>
+    <text x="245" y="348" fill="white" font-size="10" font-weight="800">445</text>
+    <text x="245" y="357" fill="#606060" font-size="7">KCAL</text>
+    <text x="353" y="352" text-anchor="end" fill="#606060" font-size="9">❤ 8</text>
+
+    <!-- Activity Card 3 - abbreviated -->
+    <rect x="142" y="368" width="220" height="60" rx="12" fill="#141414" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <circle cx="158" cy="384" r="10" fill="#44BBA4"/>
+    <text x="158" y="388" text-anchor="middle" fill="white" font-size="9" font-weight="700">M</text>
+    <text x="172" y="381" fill="white" font-size="10" font-weight="600">Mike Johnson</text>
+    <text x="172" y="392" fill="#606060" font-size="8">Trail Hike · Yesterday</text>
+    <text x="152" y="416" fill="white" font-size="10" font-weight="800">8.2 km</text>
+    <text x="200" y="416" fill="#606060" font-size="8">3:24 hrs</text>
+    <text x="250" y="416" fill="#606060" font-size="8">512m elev</text>
+    <text x="353" y="416" text-anchor="end" fill="#606060" font-size="9">❤ 22</text>
+
+    <!-- Tab bar background -->
+    <rect x="134" y="492" width="236" height="67" fill="#0A0A0A"/>
+    <rect x="134" y="492" width="236" height="1" fill="rgba(255,255,255,0.08)"/>
+
+    <!-- Tab items -->
+    <text x="163" y="512" text-anchor="middle" fill="#FC4C02" font-size="12">🏠</text>
+    <text x="163" y="523" text-anchor="middle" fill="#FC4C02" font-size="8">Home</text>
+
+    <text x="205" y="512" text-anchor="middle" fill="#444" font-size="12">🗺</text>
+    <text x="205" y="523" text-anchor="middle" fill="#444" font-size="8">Explore</text>
+
+    <!-- Record button (center) -->
+    <circle cx="252" cy="509" r="22" fill="url(#orangeGrad)" filter="url(#cardShadow)"/>
+    <circle cx="252" cy="509" r="19" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+    <!-- Record icon (circle) -->
+    <circle cx="252" cy="509" r="7" fill="white"/>
+
+    <text x="299" y="512" text-anchor="middle" fill="#444" font-size="12">📊</text>
+    <text x="299" y="523" text-anchor="middle" fill="#444" font-size="8">Training</text>
+
+    <text x="341" y="512" text-anchor="middle" fill="#444" font-size="12">👤</text>
+    <text x="341" y="523" text-anchor="middle" fill="#444" font-size="8">Profile</text>
+
+    <!-- Home indicator bar -->
+    <rect x="214" y="549" width="76" height="4" rx="2" fill="rgba(255,255,255,0.3)"/>
+  </g>
+
+
+  <!-- ================================================================ -->
+  <!-- PHONE 2: RECORD SCREEN -->
+  <!-- ================================================================ -->
+  <g filter="url(#phoneShadow)">
+    <rect x="404" y="24" width="248" height="549" rx="42" fill="#1A1A1A"/>
+    <rect x="406" y="26" width="244" height="545" rx="40" fill="#111111" stroke="#2A2A2A" stroke-width="1.5"/>
+    <rect x="410" y="38" width="236" height="521" rx="34" fill="#0d0d1a"/>
+    <rect x="400" y="110" width="4" height="36" rx="2" fill="#222"/>
+    <rect x="400" y="158" width="4" height="60" rx="2" fill="#222"/>
+    <rect x="656" y="130" width="4" height="48" rx="2" fill="#222"/>
+    <rect x="489" y="48" width="78" height="22" rx="11" fill="#000"/>
+    <circle cx="547" cy="59" r="4" fill="#0d0d0d"/>
+  </g>
+
+  <g clip-path="url(#clip2)">
+    <!-- Full-screen dark map -->
+    <rect x="410" y="38" width="236" height="521" fill="url(#mapGrid)"/>
+
+    <!-- Map road lines (dark style) -->
+    <g stroke="#1e1e32" stroke-width="8" fill="none" opacity="0.9">
+      <line x1="410" y1="200" x2="646" y2="200"/>
+      <line x1="520" y1="38" x2="520" y2="559"/>
+      <line x1="410" y1="340" x2="646" y2="340"/>
+      <line x1="450" y1="38" x2="450" y2="559"/>
+      <line x1="580" y1="38" x2="580" y2="559"/>
+    </g>
+    <g stroke="#161626" stroke-width="4" fill="none" opacity="0.7">
+      <line x1="410" y1="150" x2="646" y2="150"/>
+      <line x1="410" y1="270" x2="646" y2="270"/>
+      <line x1="410" y1="400" x2="646" y2="400"/>
+      <line x1="480" y1="38" x2="480" y2="559"/>
+      <line x1="560" y1="38" x2="560" y2="559"/>
+      <line x1="620" y1="38" x2="620" y2="559"/>
+    </g>
+
+    <!-- GPS route trail (orange polyline) -->
+    <polyline
+      points="490,480 492,460 488,440 495,415 498,390 493,365 500,340 508,318 512,295 518,272 523,252 528,232 524,210 530,190 535,170 542,155 548,138 553,120"
+      fill="none" stroke="#FC4C02" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+    <!-- Route glow -->
+    <polyline
+      points="490,480 492,460 488,440 495,415 498,390 493,365 500,340 508,318 512,295 518,272 523,252 528,232 524,210 530,190 535,170 542,155 548,138 553,120"
+      fill="none" stroke="#FC4C02" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.15"/>
+
+    <!-- GPS current position dot -->
+    <circle cx="553" cy="120" r="8" fill="#FC4C02" opacity="0.3"/>
+    <circle cx="553" cy="120" r="5" fill="#FC4C02"/>
+    <circle cx="553" cy="120" r="3" fill="white"/>
+
+    <!-- Stats overlay (top bar) -->
+    <rect x="418" y="70" width="220" height="70" rx="14" fill="rgba(10,10,10,0.85)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+    <!-- Live stats 2x2 -->
+    <text x="438" y="90" fill="#606060" font-size="7" text-transform="uppercase" letter-spacing="0.5">DISTANCE</text>
+    <text x="438" y="104" fill="white" font-size="16" font-weight="900">8.42</text>
+    <text x="467" y="104" fill="#606060" font-size="9" dominant-baseline="auto">km</text>
+
+    <text x="512" y="90" fill="#606060" font-size="7" text-transform="uppercase" letter-spacing="0.5">PACE</text>
+    <text x="512" y="104" fill="#FC4C02" font-size="16" font-weight="900">5:12</text>
+    <text x="540" y="104" fill="#606060" font-size="9">/km</text>
+
+    <line x1="505" y1="76" x2="505" y2="132" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <line x1="418" y1="115" x2="638" y2="115" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+
+    <text x="438" y="123" fill="#606060" font-size="7" text-transform="uppercase">TIME</text>
+    <text x="438" y="133" fill="white" font-size="13" font-weight="800">43:28</text>
+
+    <text x="512" y="123" fill="#606060" font-size="7" text-transform="uppercase">ELEVATION</text>
+    <text x="512" y="133" fill="white" font-size="13" font-weight="800">+124m</text>
+
+    <!-- Recording indicator -->
+    <circle cx="426" cy="56" r="5" fill="#FC4C02">
+      <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <text x="434" y="59" fill="white" font-size="8" font-weight="600">RECORDING</text>
+
+    <!-- Control buttons (bottom) -->
+    <rect x="418" y="450" width="220" height="80" rx="14" fill="rgba(10,10,10,0.85)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+    <!-- Pause button -->
+    <circle cx="480" cy="490" r="24" fill="#141414" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+    <!-- Pause icon bars -->
+    <rect x="473" y="481" width="5" height="18" rx="2" fill="white"/>
+    <rect x="481" y="481" width="5" height="18" rx="2" fill="white"/>
+
+    <!-- Stop button (center) -->
+    <circle cx="534" cy="490" r="28" fill="url(#orangeGrad)"/>
+    <rect x="524" y="480" width="20" height="20" rx="3" fill="white"/>
+
+    <!-- Lap button -->
+    <circle cx="590" cy="490" r="24" fill="#141414" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+    <text x="590" y="495" text-anchor="middle" fill="white" font-size="10" font-weight="600">LAP</text>
+
+    <!-- Pause label -->
+    <text x="480" y="520" text-anchor="middle" fill="#606060" font-size="8">Pause</text>
+    <text x="534" y="524" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="8">Stop</text>
+    <text x="590" y="520" text-anchor="middle" fill="#606060" font-size="8">Lap</text>
+
+    <!-- Home indicator -->
+    <rect x="490" y="549" width="76" height="4" rx="2" fill="rgba(255,255,255,0.3)"/>
+  </g>
+
+
+  <!-- ================================================================ -->
+  <!-- PHONE 3: ACTIVITY DETAIL -->
+  <!-- ================================================================ -->
+  <g filter="url(#phoneShadow)">
+    <rect x="680" y="24" width="248" height="549" rx="42" fill="#1A1A1A"/>
+    <rect x="682" y="26" width="244" height="545" rx="40" fill="#111111" stroke="#2A2A2A" stroke-width="1.5"/>
+    <rect x="686" y="38" width="236" height="521" rx="34" fill="#0A0A0A"/>
+    <rect x="676" y="110" width="4" height="36" rx="2" fill="#222"/>
+    <rect x="676" y="158" width="4" height="60" rx="2" fill="#222"/>
+    <rect x="932" y="130" width="4" height="48" rx="2" fill="#222"/>
+    <rect x="765" y="48" width="78" height="22" rx="11" fill="#000"/>
+    <circle cx="823" cy="59" r="4" fill="#0d0d0d"/>
+  </g>
+
+  <g clip-path="url(#clip3)">
+    <!-- Map hero (top half) -->
+    <rect x="686" y="38" width="236" height="220" fill="url(#mapGrid)"/>
+
+    <!-- Map roads -->
+    <g stroke="#1e1e32" stroke-width="6" fill="none">
+      <line x1="686" y1="150" x2="922" y2="150"/>
+      <line x1="800" y1="38" x2="800" y2="258"/>
+      <line x1="750" y1="38" x2="750" y2="258"/>
+      <line x1="860" y1="38" x2="860" y2="258"/>
+    </g>
+    <g stroke="#161626" stroke-width="3" fill="none">
+      <line x1="686" y1="100" x2="922" y2="100"/>
+      <line x1="686" y1="200" x2="922" y2="200"/>
+      <line x1="720" y1="38" x2="720" y2="258"/>
+      <line x1="840" y1="38" x2="840" y2="258"/>
+      <line x1="900" y1="38" x2="900" y2="258"/>
+    </g>
+
+    <!-- Route -->
+    <polyline
+      points="706,240 718,225 725,210 730,195 738,180 745,165 750,150 758,138 766,128 775,118 785,112 795,108 808,112 820,118 830,128 838,140 842,155 840,170 832,182 820,190 808,195 796,198 784,200 775,205 768,212 762,222 760,230 762,240"
+      fill="none" stroke="#FC4C02" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <polyline
+      points="706,240 718,225 725,210 730,195 738,180 745,165 750,150 758,138 766,128 775,118 785,112 795,108 808,112 820,118 830,128 838,140 842,155 840,170 832,182 820,190 808,195 796,198 784,200 775,205 768,212 762,222 760,230 762,240"
+      fill="none" stroke="#FC4C02" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.12"/>
+
+    <!-- Map fade -->
+    <rect x="686" y="180" width="236" height="78" fill="url(#mapFade)"/>
+
+    <!-- Back button overlaid on map -->
+    <circle cx="706" cy="62" r="14" fill="rgba(0,0,0,0.65)"/>
+    <text x="706" y="67" text-anchor="middle" fill="white" font-size="12">‹</text>
+
+    <!-- Body -->
+    <rect x="686" y="258" width="236" height="301" fill="#0A0A0A"/>
+
+    <!-- Athlete row -->
+    <circle cx="706" cy="278" r="12" fill="#FC4C02"/>
+    <text x="706" y="282" text-anchor="middle" fill="white" font-size="9" font-weight="700">A</text>
+    <text x="722" y="274" fill="white" font-size="10" font-weight="600">Alex Martinez</text>
+    <text x="722" y="285" fill="#606060" font-size="8">Wednesday, May 28, 2025</text>
+    <text x="912" y="280" text-anchor="end" fill="#FC4C02" font-size="12">🏃</text>
+
+    <!-- Activity title -->
+    <text x="694" y="303" fill="white" font-size="15" font-weight="800">Morning Run – Easy 12K</text>
+
+    <!-- Stats grid -->
+    <rect x="694" y="312" width="220" height="64" rx="10" fill="#141414" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <text x="714" y="330" text-anchor="middle" fill="#606060" font-size="7" letter-spacing="0.3">DISTANCE</text>
+    <text x="714" y="344" text-anchor="middle" fill="white" font-size="15" font-weight="800">12.4</text>
+    <text x="727" y="344" fill="#606060" font-size="8">km</text>
+
+    <line x1="750" y1="318" x2="750" y2="370" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <text x="768" y="330" text-anchor="middle" fill="#606060" font-size="7" letter-spacing="0.3">PACE</text>
+    <text x="768" y="344" text-anchor="middle" fill="white" font-size="15" font-weight="800">4:52</text>
+    <text x="782" y="344" fill="#606060" font-size="8">/km</text>
+
+    <line x1="805" y1="318" x2="805" y2="370" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <text x="826" y="330" text-anchor="middle" fill="#606060" font-size="7" letter-spacing="0.3">TIME</text>
+    <text x="826" y="344" text-anchor="middle" fill="white" font-size="15" font-weight="800">1:00</text>
+    <text x="839" y="344" fill="#606060" font-size="8">hr</text>
+
+    <!-- Secondary stats list -->
+    <rect x="694" y="382" width="220" height="80" rx="10" fill="#141414" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <!-- Row 1 -->
+    <text x="704" y="397" fill="#A0A0A0" font-size="9">Elevation Gain</text>
+    <text x="906" y="397" text-anchor="end" fill="white" font-size="9" font-weight="600">+124 m</text>
+    <line x1="694" y1="403" x2="914" y2="403" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    <!-- Row 2 -->
+    <text x="704" y="416" fill="#A0A0A0" font-size="9">Avg Heart Rate</text>
+    <text x="906" y="416" text-anchor="end" fill="white" font-size="9" font-weight="600">148 bpm</text>
+    <line x1="694" y1="422" x2="914" y2="422" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    <!-- Row 3 -->
+    <text x="704" y="435" fill="#A0A0A0" font-size="9">Calories</text>
+    <text x="906" y="435" text-anchor="end" fill="white" font-size="9" font-weight="600">682 kcal</text>
+    <line x1="694" y1="441" x2="914" y2="441" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    <!-- Row 4 -->
+    <text x="704" y="454" fill="#A0A0A0" font-size="9">Max Speed</text>
+    <text x="906" y="454" text-anchor="end" fill="white" font-size="9" font-weight="600">14.2 km/h</text>
+
+    <!-- Kudo bar -->
+    <rect x="694" y="468" width="220" height="36" fill="#0A0A0A"/>
+    <line x1="694" y1="468" x2="914" y2="468" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <!-- Heart -->
+    <text x="704" y="490" fill="#FC4C02" font-size="14">♥</text>
+    <text x="720" y="490" fill="#FC4C02" font-size="11" font-weight="600">14</text>
+    <text x="733" y="490" fill="#606060" font-size="11"> Kudos</text>
+    <line x1="694" y1="503" x2="914" y2="503" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+
+    <!-- Comments -->
+    <text x="694" y="518" fill="white" font-size="11" font-weight="700">Comments (3)</text>
+
+    <!-- Comment 1 -->
+    <circle cx="704" cy="532" r="7" fill="#2E86AB"/>
+    <text x="704" y="536" text-anchor="middle" fill="white" font-size="7" font-weight="700">S</text>
+    <text x="714" y="530" fill="white" font-size="8" font-weight="600">Sarah Chen</text>
+    <text x="714" y="540" fill="#A0A0A0" font-size="8">Crushing it! 🔥</text>
+
+    <!-- Home indicator -->
+    <rect x="766" y="549" width="76" height="4" rx="2" fill="rgba(255,255,255,0.3)"/>
+  </g>
+
+
+  <!-- ================================================================ -->
+  <!-- PHONE 4: TRAINING SCREEN -->
+  <!-- ================================================================ -->
+  <g filter="url(#phoneShadow)">
+    <rect x="956" y="24" width="248" height="549" rx="42" fill="#1A1A1A"/>
+    <rect x="958" y="26" width="244" height="545" rx="40" fill="#111111" stroke="#2A2A2A" stroke-width="1.5"/>
+    <rect x="962" y="38" width="236" height="521" rx="34" fill="#0A0A0A"/>
+    <rect x="952" y="110" width="4" height="36" rx="2" fill="#222"/>
+    <rect x="952" y="158" width="4" height="60" rx="2" fill="#222"/>
+    <rect x="1208" y="130" width="4" height="48" rx="2" fill="#222"/>
+    <rect x="1041" y="48" width="78" height="22" rx="11" fill="#000"/>
+    <circle cx="1099" cy="59" r="4" fill="#0d0d0d"/>
+  </g>
+
+  <g clip-path="url(#clip4)">
+    <rect x="962" y="38" width="236" height="521" fill="#0A0A0A"/>
+
+    <!-- Header -->
+    <text x="980" y="84" fill="white" font-size="18" font-weight="900">Training</text>
+    <text x="1176" y="84" text-anchor="end" fill="#606060" font-size="11">This Week</text>
+
+    <!-- Weekly totals grid 2x2 -->
+    <rect x="970" y="94" width="220" height="88" rx="12" fill="#141414" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <!-- Grid cells -->
+    <rect x="970" y="94" width="108" height="42" rx="0" fill="transparent"/>
+    <rect x="1082" y="94" width="108" height="42" rx="0" fill="transparent"/>
+    <rect x="970" y="140" width="108" height="42" rx="0" fill="transparent"/>
+    <rect x="1082" y="140" width="108" height="42" rx="0" fill="transparent"/>
+
+    <line x1="1078" y1="100" x2="1078" y2="176" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="970" y1="138" x2="1190" y2="138" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <text x="990" y="112" fill="#606060" font-size="7" letter-spacing="0.3">DISTANCE</text>
+    <text x="990" y="130" fill="white" font-size="17" font-weight="800">47.2</text>
+    <text x="1014" y="130" fill="#606060" font-size="9">km</text>
+
+    <text x="1096" y="112" fill="#606060" font-size="7" letter-spacing="0.3">TIME</text>
+    <text x="1096" y="130" fill="white" font-size="17" font-weight="800">4:22</text>
+    <text x="1118" y="130" fill="#606060" font-size="9">hrs</text>
+
+    <text x="990" y="152" fill="#606060" font-size="7" letter-spacing="0.3">ACTIVITIES</text>
+    <text x="990" y="170" fill="white" font-size="17" font-weight="800">6</text>
+
+    <text x="1096" y="152" fill="#606060" font-size="7" letter-spacing="0.3">ELEVATION</text>
+    <text x="1096" y="170" fill="white" font-size="17" font-weight="800">+842</text>
+    <text x="1127" y="170" fill="#606060" font-size="9">m</text>
+
+    <!-- Streak card -->
+    <rect x="970" y="190" width="220" height="50" rx="12" fill="#141414" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <!-- Fire icon -->
+    <text x="984" y="220" fill="#FC4C02" font-size="20">🔥</text>
+    <text x="1006" y="211" fill="white" font-size="11" font-weight="700">18-Day Streak</text>
+    <text x="1006" y="224" fill="#606060" font-size="8">Best: 42 days  ·  Keep it going!</text>
+    <rect x="1138" y="210" width="42" height="22" rx="11" fill="rgba(252,76,2,0.15)" stroke="rgba(252,76,2,0.3)" stroke-width="1"/>
+    <text x="1159" y="224" text-anchor="middle" fill="#FC4C02" font-size="9" font-weight="700">Active</text>
+
+    <!-- Weekly bar chart label -->
+    <text x="980" y="260" fill="white" font-size="12" font-weight="700">Weekly Volume</text>
+    <text x="1180" y="260" text-anchor="end" fill="#606060" font-size="9">km</text>
+
+    <!-- Bar chart -->
+    <rect x="970" y="268" width="220" height="108" rx="12" fill="#141414" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <!-- Bars (7 days) -->
+    <!-- Day labels -->
+    <text x="986" y="370" text-anchor="middle" fill="#606060" font-size="7">M</text>
+    <text x="1014" y="370" text-anchor="middle" fill="#606060" font-size="7">T</text>
+    <text x="1042" y="370" text-anchor="middle" fill="#606060" font-size="7">W</text>
+    <text x="1070" y="370" text-anchor="middle" fill="#606060" font-size="7">T</text>
+    <text x="1098" y="370" text-anchor="middle" fill="#606060" font-size="7">F</text>
+    <text x="1126" y="370" text-anchor="middle" fill="#606060" font-size="7">S</text>
+    <text x="1154" y="370" text-anchor="middle" fill="#FC4C02" font-size="7">S</text>
+
+    <!-- Bar heights (km values, max ~15km = 70px height) -->
+    <rect x="978" y="347" width="16" height="16" rx="4" fill="url(#barGrad)"/>
+    <rect x="1006" y="335" width="16" height="28" rx="4" fill="url(#barGrad)"/>
+    <rect x="1034" y="310" width="16" height="53" rx="4" fill="url(#barGrad)"/>
+    <rect x="1062" y="345" width="16" height="18" rx="4" fill="url(#barGrad)"/>
+    <rect x="1090" y="320" width="16" height="43" rx="4" fill="url(#barGrad)"/>
+    <rect x="1118" y="338" width="16" height="25" rx="4" fill="url(#barGrad)"/>
+    <rect x="1146" y="300" width="16" height="63" rx="4" fill="#FC4C02"/>
+
+    <!-- Highlight bar value for today -->
+    <text x="1154" y="296" text-anchor="middle" fill="#FC4C02" font-size="8" font-weight="700">12.4</text>
+
+    <!-- Sport breakdown -->
+    <text x="980" y="398" fill="white" font-size="12" font-weight="700">By Sport</text>
+
+    <rect x="970" y="406" width="220" height="68" rx="12" fill="#141414" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <!-- Run -->
+    <circle cx="986" cy="422" r="7" fill="rgba(252,76,2,0.15)"/>
+    <text x="986" y="426" text-anchor="middle" fill="#FC4C02" font-size="8">🏃</text>
+    <text x="996" y="418" fill="white" font-size="9" font-weight="600">Running</text>
+    <text x="996" y="429" fill="#606060" font-size="8">4 runs · 34.2 km</text>
+    <text x="1180" y="424" text-anchor="end" fill="#FC4C02" font-size="8" font-weight="600">72%</text>
+    <!-- Progress bar run -->
+    <rect x="970" y="433" width="220" height="2" fill="#1C1C1C"/>
+    <rect x="970" y="433" width="158" height="2" fill="#FC4C02"/>
+
+    <!-- Ride -->
+    <circle cx="986" cy="451" r="7" fill="rgba(46,134,171,0.15)"/>
+    <text x="986" y="455" text-anchor="middle" fill="#2E86AB" font-size="8">🚴</text>
+    <text x="996" y="447" fill="white" font-size="9" font-weight="600">Cycling</text>
+    <text x="996" y="458" fill="#606060" font-size="8">2 rides · 13.0 km</text>
+    <text x="1180" y="453" text-anchor="end" fill="#2E86AB" font-size="8" font-weight="600">28%</text>
+    <!-- Progress bar ride -->
+    <rect x="970" y="462" width="220" height="2" fill="#1C1C1C"/>
+    <rect x="970" y="462" width="62" height="2" fill="#2E86AB"/>
+
+    <!-- Premium gate teaser -->
+    <rect x="970" y="480" width="220" height="48" rx="12" fill="rgba(255,215,0,0.05)" stroke="rgba(255,215,0,0.2)" stroke-width="1"/>
+    <text x="990" y="498" fill="#FFD700" font-size="9" font-weight="700">⭐ Fitness &amp; Freshness (CTL/ATL)</text>
+    <text x="990" y="510" fill="#606060" font-size="8">Advanced analytics — upgrade to Premium</text>
+    <rect x="1135" y="492" width="45" height="20" rx="10" fill="url(#goldGrad)"/>
+    <text x="1158" y="505" text-anchor="middle" fill="#000" font-size="8" font-weight="800">Unlock</text>
+
+    <!-- Tab bar -->
+    <rect x="962" y="520" width="236" height="39" fill="#0A0A0A"/>
+    <rect x="962" y="520" width="236" height="1" fill="rgba(255,255,255,0.08)"/>
+    <text x="988" y="535" text-anchor="middle" fill="#444" font-size="10">🏠</text>
+    <text x="988" y="546" text-anchor="middle" fill="#444" font-size="7">Home</text>
+    <text x="1024" y="535" text-anchor="middle" fill="#444" font-size="10">🗺</text>
+    <text x="1024" y="546" text-anchor="middle" fill="#444" font-size="7">Explore</text>
+    <circle cx="1080" cy="531" r="16" fill="url(#orangeGrad)"/>
+    <circle cx="1080" cy="531" r="6" fill="white"/>
+    <text x="1136" y="535" text-anchor="middle" fill="#FC4C02" font-size="10">📊</text>
+    <text x="1136" y="546" text-anchor="middle" fill="#FC4C02" font-size="7">Training</text>
+    <text x="1172" y="535" text-anchor="middle" fill="#444" font-size="10">👤</text>
+    <text x="1172" y="546" text-anchor="middle" fill="#444" font-size="7">Profile</text>
+
+    <rect x="1042" y="549" width="76" height="4" rx="2" fill="rgba(255,255,255,0.3)"/>
+  </g>
+
+
+  <!-- ================================================================ -->
+  <!-- PHONE 5: PREMIUM SCREEN -->
+  <!-- ================================================================ -->
+  <g filter="url(#phoneShadow)">
+    <rect x="1232" y="24" width="248" height="549" rx="42" fill="#1A1A1A"/>
+    <rect x="1234" y="26" width="244" height="545" rx="40" fill="#111111" stroke="#2A2A2A" stroke-width="1.5"/>
+    <rect x="1238" y="38" width="236" height="521" rx="34" fill="#0A0A0A"/>
+    <rect x="1228" y="110" width="4" height="36" rx="2" fill="#222"/>
+    <rect x="1228" y="158" width="4" height="60" rx="2" fill="#222"/>
+    <rect x="1484" y="130" width="4" height="48" rx="2" fill="#222"/>
+    <rect x="1317" y="48" width="78" height="22" rx="11" fill="#000"/>
+    <circle cx="1375" cy="59" r="4" fill="#0d0d0d"/>
+  </g>
+
+  <g clip-path="url(#clip5)">
+    <rect x="1238" y="38" width="236" height="521" fill="#0A0A0A"/>
+
+    <!-- Gold glow background -->
+    <ellipse cx="1356" cy="140" rx="120" ry="80" fill="rgba(255,215,0,0.06)"/>
+
+    <!-- Close button -->
+    <circle cx="1456" cy="68" r="14" fill="#141414" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <text x="1456" y="73" text-anchor="middle" fill="#A0A0A0" font-size="13" font-weight="300">×</text>
+
+    <!-- Star icon (hero) -->
+    <circle cx="1356" cy="104" r="30" fill="rgba(255,215,0,0.12)" stroke="rgba(255,215,0,0.25)" stroke-width="2"/>
+    <text x="1356" y="116" text-anchor="middle" fill="#FFD700" font-size="24">★</text>
+
+    <!-- Title -->
+    <text x="1356" y="148" text-anchor="middle" fill="white" font-size="18" font-weight="900" letter-spacing="1">Stride Premium</text>
+    <text x="1356" y="163" text-anchor="middle" fill="#A0A0A0" font-size="10">Unlock your full athletic potential</text>
+
+    <!-- Features list -->
+    <rect x="1248" y="174" width="216" height="178" rx="14" fill="#141414" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <!-- Feature rows -->
+    <circle cx="1264" cy="192" r="9" fill="rgba(255,215,0,0.1)"/>
+    <text x="1264" y="196" text-anchor="middle" fill="#FFD700" font-size="9">🏆</text>
+    <text x="1278" y="193" fill="white" font-size="9" font-weight="500">Segment leaderboards &amp; KOM tracking</text>
+
+    <circle cx="1264" cy="212" r="9" fill="rgba(255,215,0,0.1)"/>
+    <text x="1264" y="216" text-anchor="middle" fill="#FFD700" font-size="9">📊</text>
+    <text x="1278" y="213" fill="white" font-size="9" font-weight="500">Advanced analytics &amp; fitness curves</text>
+
+    <circle cx="1264" cy="232" r="9" fill="rgba(255,215,0,0.1)"/>
+    <text x="1264" y="236" text-anchor="middle" fill="#FFD700" font-size="9">❤</text>
+    <text x="1278" y="233" fill="white" font-size="9" font-weight="500">Heart rate zone analysis</text>
+
+    <circle cx="1264" cy="252" r="9" fill="rgba(255,215,0,0.1)"/>
+    <text x="1264" y="256" text-anchor="middle" fill="#FFD700" font-size="9">🗺</text>
+    <text x="1278" y="253" fill="white" font-size="9" font-weight="500">Route &amp; heatmap exploration</text>
+
+    <circle cx="1264" cy="272" r="9" fill="rgba(255,215,0,0.1)"/>
+    <text x="1264" y="276" text-anchor="middle" fill="#FFD700" font-size="9">⚡</text>
+    <text x="1278" y="273" fill="white" font-size="9" font-weight="500">AI-powered coaching insights</text>
+
+    <circle cx="1264" cy="292" r="9" fill="rgba(255,215,0,0.1)"/>
+    <text x="1264" y="296" text-anchor="middle" fill="#FFD700" font-size="9">👥</text>
+    <text x="1278" y="293" fill="white" font-size="9" font-weight="500">Group challenges &amp; club features</text>
+
+    <circle cx="1264" cy="312" r="9" fill="rgba(255,215,0,0.1)"/>
+    <text x="1264" y="316" text-anchor="middle" fill="#FFD700" font-size="9">🛡</text>
+    <text x="1278" y="313" fill="white" font-size="9" font-weight="500">Priority support</text>
+
+    <!-- Divider line in card -->
+    <line x1="1248" y1="324" x2="1464" y2="324" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+    <!-- Checkmark bonus -->
+    <text x="1264" y="342" fill="#FFD700" font-size="9">✓</text>
+    <text x="1278" y="342" fill="#606060" font-size="9">Custom training plans</text>
+
+    <!-- Plan cards row -->
+    <rect x="1248" y="360" width="100" height="70" rx="12" fill="#141414" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <rect x="1356" y="356" width="108" height="78" rx="12" fill="rgba(255,215,0,0.06)" stroke="#FFD700" stroke-width="1.5"/>
+
+    <!-- Monthly plan -->
+    <text x="1298" y="376" text-anchor="middle" fill="#A0A0A0" font-size="9" font-weight="600">Monthly</text>
+    <text x="1298" y="394" text-anchor="middle" fill="white" font-size="17" font-weight="800">$7.99</text>
+    <text x="1298" y="407" text-anchor="middle" fill="#606060" font-size="8">/month</text>
+    <text x="1298" y="420" text-anchor="middle" fill="#606060" font-size="7">7-day free trial</text>
+
+    <!-- Annual plan (highlighted) -->
+    <rect x="1376" y="352" width="68" height="16" rx="8" fill="#FFD700"/>
+    <text x="1410" y="363" text-anchor="middle" fill="#000" font-size="8" font-weight="800">Save 50%</text>
+    <text x="1410" y="380" text-anchor="middle" fill="#A0A0A0" font-size="9" font-weight="600">Annual</text>
+    <text x="1410" y="399" text-anchor="middle" fill="#FFD700" font-size="17" font-weight="800">$47.99</text>
+    <text x="1410" y="412" text-anchor="middle" fill="#606060" font-size="8">/year</text>
+    <text x="1410" y="423" text-anchor="middle" fill="#FFD700" font-size="8" font-weight="600">$3.99/mo</text>
+
+    <!-- CTA button -->
+    <rect x="1248" y="442" width="216" height="44" rx="14" fill="url(#goldGrad)" filter="url(#cardShadow)"/>
+    <text x="1356" y="468" text-anchor="middle" fill="#000" font-size="14" font-weight="800">Start Free 7-Day Trial</text>
+
+    <!-- Legal text -->
+    <text x="1356" y="500" text-anchor="middle" fill="#444" font-size="7">Cancel anytime. Free trial converts after 7 days.</text>
+    <text x="1356" y="510" text-anchor="middle" fill="#444" font-size="7">Payments processed securely via Stripe.</text>
+
+    <!-- Restore button -->
+    <text x="1356" y="525" text-anchor="middle" fill="#606060" font-size="8" text-decoration="underline">Restore Purchases</text>
+
+    <!-- Home indicator -->
+    <rect x="1318" y="549" width="76" height="4" rx="2" fill="rgba(255,255,255,0.3)"/>
+  </g>
+
+
+  <!-- ===== TITLE HEADER AREA ===== -->
+  <text x="800" y="24" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11" font-weight="600" letter-spacing="4">DAILY STRIDE  —  APP SCREEN PREVIEW</text>
+
+</svg>
