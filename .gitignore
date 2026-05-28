@@ -1,14 +1,30 @@
 # dependencies
 node_modules/
 
-# build output
+# Expo
+.expo/
 dist/
-dist-ssr/
+web-build/
+
+# Native build outputs
+ios/
+android/
+*.ipa
+*.apk
+*.aab
+
+# EAS
+.easignore
 
 # local env files
 .env
 .env.local
 .env.*.local
+
+# credentials (never commit these)
+google-service-account.json
+GoogleService-Info.plist
+google-services.json
 
 # editor
 .vscode/
@@ -26,3 +42,6 @@ Thumbs.db
 # logs
 *.log
 npm-debug.log*
+
+# TypeScript
+*.tsbuildinfo

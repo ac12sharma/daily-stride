@@ -1,0 +1,59 @@
+{
+  "expo": {
+    "name": "Stride",
+    "slug": "stride-fitness",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0A0A0A"
+    },
+    "scheme": "stride",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.stride.fitness",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Stride uses your location to track your activities and routes.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Stride uses your location in the background to continue tracking your activity.",
+        "NSMotionUsageDescription": "Stride uses motion data to count your steps and detect activity type."
+      },
+      "config": {
+        "googleMapsApiKey": "YOUR_IOS_GOOGLE_MAPS_KEY"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0A0A0A"
+      },
+      "package": "com.stride.fitness",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "ACTIVITY_RECOGNITION"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "YOUR_ANDROID_GOOGLE_MAPS_KEY"
+        }
+      }
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Stride needs location access to track your workouts.",
+          "isAndroidBackgroundLocationEnabled": true
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
