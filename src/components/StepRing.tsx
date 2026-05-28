@@ -19,12 +19,17 @@ export default function StepRing({ steps, goal, goalReached }: Props) {
   useEffect(() => {
     if (goalReached && !hasConfettied.current) {
       hasConfettied.current = true;
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.4 },
-        colors: ["#a3e635", "#22d3ee", "#facc15"],
-      });
+      const today = new Date().toISOString().split("T")[0];
+      const storageKey = `stride_confetti_${today}`;
+      if (!localStorage.getItem(storageKey)) {
+        localStorage.setItem(storageKey, "1");
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.4 },
+          colors: ["#a3e635", "#22d3ee", "#facc15"],
+        });
+      }
     }
   }, [goalReached]);
 

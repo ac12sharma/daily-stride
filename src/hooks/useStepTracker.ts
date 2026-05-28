@@ -47,17 +47,35 @@ export function useStepTracker() {
         .limit(60);
 
       if (history) {
-        let s = 0;
-        const dates = history.filter((d) => d.steps >= d.goal);
-        for (let i = 0; i < dates.length; i++) {
+        // Goal-reached days descending (newest first, as returned by query)
+        const goalDaysDesc = history
+          .filter((d) => d.steps >= d.goal)
+          .map((d) => d.date);
+
+        // Current streak: consecutive days from today backwards
+        let currentStreak = 0;
+        for (let i = 0; i < goalDaysDesc.length; i++) {
           const expected = new Date();
           expected.setDate(expected.getDate() - i);
           const exp = expected.toISOString().split("T")[0];
-          if (dates[i]?.date === exp) s++;
+          if (goalDaysDesc[i] === exp) currentStreak++;
           else break;
         }
-        setStreak(s);
-        setBestStreak(Math.max(s, bestStreak));
+
+        // Best streak: longest consecutive run across all history
+        const goalDaysAsc = [...goalDaysDesc].reverse();
+        let best = currentStreak;
+        let run = goalDaysAsc.length > 0 ? 1 : 0;
+        for (let i = 1; i < goalDaysAsc.length; i++) {
+          const curr = new Date(goalDaysAsc[i] + "T00:00:00");
+          const prev = new Date(goalDaysAsc[i - 1] + "T00:00:00");
+          const diff = Math.round((curr.getTime() - prev.getTime()) / 86400000);
+          run = diff === 1 ? run + 1 : 1;
+          best = Math.max(best, run);
+        }
+
+        setStreak(currentStreak);
+        setBestStreak(best);
       }
       setLoading(false);
     };
@@ -73,8 +91,11 @@ export function useStepTracker() {
       setGoalReached(reached);
 
       if (reached && !goalReached) {
-        setStreak((s) => s + 1);
-        setBestStreak((b) => Math.max(b, streak + 1));
+        setStreak((s) => {
+          const next = s + 1;
+          setBestStreak((b) => Math.max(b, next));
+          return next;
+        });
       }
 
       await supabase.from("daily_steps").upsert(
