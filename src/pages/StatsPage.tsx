@@ -6,7 +6,7 @@ export default function StatsPage() {
   const { weekData, totalSteps, avgSteps, loading } = useStats();
 
   const chartData = weekData.map((d) => ({
-    day: new Date(d.date).toLocaleDateString("en", { weekday: "short" }),
+    day: new Date(d.date + "T00:00:00").toLocaleDateString("en", { weekday: "short" }),
     steps: d.steps,
     goal: d.goal,
     reached: d.steps >= d.goal,
